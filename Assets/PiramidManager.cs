@@ -14,14 +14,7 @@ public class PiramidManager : MonoBehaviour
 	public Transform pegPrefab;
 	public Transform ballPrefab;
 	public Image coefficientPrefab;
-	public TextMeshProUGUI coefficientTextPrefab;
-	public TextMeshPro coefficientTextPref;
-	public Text _textPref;
 	public Canvas _canvas;
-	private Vector3 horizontalOffset;
-
-	const int FINISHTRIGGERLAYER = 8;
-
 
 	public async Task<GameObject> LaunchBallAsync(Ball ball)
 	{
@@ -29,30 +22,19 @@ public class PiramidManager : MonoBehaviour
 		ballT.parent = transform;
 		var xOfBall = Random.Range(-0.5f * widthBetweeencircles, 0.5f * widthBetweeencircles);
 		ballT.localPosition = new Vector3(xOfBall, 2 * heightBetweeenRows, 0);
-		// Wait for the ball to enter a trigger and return the triggered GameObject
 		return await WaitForBallTrigger(ballT);
 	}
 
 	private async Task<GameObject> WaitForBallTrigger(Transform ball)
 	{
-		// Create a simple trigger detector
-		// Wait for the ball to hit the trigger and return the GameObject
 		return await ball.GetComponent<Ball>().WaitForTrigger();
 	}
 
-	//public void LaunchBall(Color color)
-	//{
-	//	var ball = Instantiate(ballPrefab, transform);
-	//	var xOfBall = Random.Range(-0.5f * widthBetweeencircles, 0.5f * widthBetweeencircles);
-	//	ball.localPosition = new Vector3(xOfBall, 2 * heightBetweeenRows, 0);
-
-	//}
 
 
 
 	public void CreatePiramid()
 	{
-		horizontalOffset = new Vector3(widthBetweeencircles, 0, 0);
 		for (int i = 3; i <= rowCount; i++)
 		{
 			CreateRow(i * heightBetweeenRows, i);
@@ -111,47 +93,5 @@ public class PiramidManager : MonoBehaviour
 
 
 	}
-	private void SetCoeficients()
-	{
 
-	}
-
-
-	// Update is called once per frame
-	void Update()
-	{
-		//if (Input.GetKeyDown(KeyCode.G))
-		//{
-		//	LaunchBall(Color.green);
-		//}
-		//if (Input.GetKeyDown(KeyCode.R)) { LaunchBall(Color.red); }
-		//if (Input.GetKeyDown(KeyCode.Y))
-		//{
-		//	LaunchBall(Color.yellow);
-		//}
-	}
-}
-public class BallDropper : MonoBehaviour
-{
-	public GameObject ballPrefab;
-	public Transform dropPoint;
-	public float dropForce = 10f;
-	public float cooldownTime = 2f;
-	private float nextDropTime = 0f;
-
-	void Update()
-	{
-		if (Time.time > nextDropTime && Input.GetKeyDown(KeyCode.Space))
-		{
-			DropBall();
-			nextDropTime = Time.time + cooldownTime;
-		}
-	}
-
-	void DropBall()
-	{
-		GameObject ball = Instantiate(ballPrefab, dropPoint.position, Quaternion.identity);
-		Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
-		rb.velocity = new Vector2(Random.Range(-2f, 2f), -dropForce);
-	}
 }
