@@ -16,22 +16,28 @@ public class PiramidManager : MonoBehaviour
 	public Image coefficientPrefab;
 	public Canvas _canvas;
 
-	public async Task<GameObject> LaunchBallAsync(Ball ball)
+	//public async Task<GameObject> LaunchBallAsync(Ball ball)
+	//{
+	//	var ballT = ball.transform;
+	//	ballT.parent = transform;
+	//	var xOfBall = Random.Range(-0.5f * widthBetweeencircles, 0.5f * widthBetweeencircles);
+	//	ballT.localPosition = new Vector3(xOfBall, 2 * heightBetweeenRows, 0);
+	//	return await WaitForBallTrigger(ballT);
+	//}
+
+	//private async Task<GameObject> WaitForBallTrigger(Transform ball)
+	//{
+	//	return await ball.GetComponent<Ball>().WaitForTrigger();
+	//}
+
+
+	public void SetPositionANdParentForBall(Ball ball)
 	{
 		var ballT = ball.transform;
 		ballT.parent = transform;
 		var xOfBall = Random.Range(-0.5f * widthBetweeencircles, 0.5f * widthBetweeencircles);
 		ballT.localPosition = new Vector3(xOfBall, 2 * heightBetweeenRows, 0);
-		return await WaitForBallTrigger(ballT);
 	}
-
-	private async Task<GameObject> WaitForBallTrigger(Transform ball)
-	{
-		return await ball.GetComponent<Ball>().WaitForTrigger();
-	}
-
-
-
 
 	public void CreatePiramid()
 	{
@@ -46,9 +52,9 @@ public class PiramidManager : MonoBehaviour
 
 	public void SetCoefficients(double[] greenCoefficients, double[] yellowCoefficients, double[] redCoefficients)
 	{
-		PlaceTextBetweenPegs(transform.position.y + (rowCount + 1) * heightBetweeenRows, rowCount - 1, Color.green, greenCoefficients);
-		PlaceTextBetweenPegs(transform.position.y + (rowCount + 2) * heightBetweeenRows, rowCount - 1, Color.yellow, yellowCoefficients);
-		PlaceTextBetweenPegs(transform.position.y + (rowCount + 3) * heightBetweeenRows, rowCount - 1, Color.red, redCoefficients);
+		PlaceCoefficientsBelowPegs(transform.position.y + (rowCount + 1) * heightBetweeenRows, rowCount - 1, Color.green, greenCoefficients);
+		PlaceCoefficientsBelowPegs(transform.position.y + (rowCount + 2) * heightBetweeenRows, rowCount - 1, Color.yellow, yellowCoefficients);
+		PlaceCoefficientsBelowPegs(transform.position.y + (rowCount + 3) * heightBetweeenRows, rowCount - 1, Color.red, redCoefficients);
 	}
 
 	private void CreateTriggers(int count, float height)
@@ -57,7 +63,7 @@ public class PiramidManager : MonoBehaviour
 		{
 			var g = new GameObject();
 
-			g.transform.position = getPostitonForPeg(i, count, height);
+			g.transform.position = GetPostitonForPeg(i, count, height);
 			g.name = i.ToString();
 			var coll = g.AddComponent<BoxCollider2D>();
 			coll.isTrigger = true;
@@ -65,7 +71,7 @@ public class PiramidManager : MonoBehaviour
 		}
 	}
 
-	private Vector3 getPostitonForPeg(float pegNumber, float pegsInRow, float height)
+	private Vector3 GetPostitonForPeg(float pegNumber, float pegsInRow, float height)
 	{
 		return new Vector3((pegNumber - (pegsInRow - 1) / 2) * widthBetweeencircles, height, 0);
 	}
@@ -75,12 +81,12 @@ public class PiramidManager : MonoBehaviour
 		for (int i = 0; i < countOfCirclesInRow; i++)
 		{
 			var t = Instantiate(pegPrefab, transform);
-			t.localPosition = getPostitonForPeg(i, countOfCirclesInRow, height);
+			t.localPosition = GetPostitonForPeg(i, countOfCirclesInRow, height);
 		}
 	}
 
 
-	private void PlaceTextBetweenPegs(float height, int countOfCirclesInRow, Color color, double[] coefficients)
+	private void PlaceCoefficientsBelowPegs(float height, int countOfCirclesInRow, Color color, double[] coefficients)
 	{
 		for (int i = 0; i < countOfCirclesInRow; i++)
 		{
@@ -88,7 +94,7 @@ public class PiramidManager : MonoBehaviour
 			im.color = color;
 			var x = im.transform.GetComponentInChildren<TextMeshProUGUI>();
 			x.text = coefficients[i].ToString();
-			im.transform.localPosition = getPostitonForPeg(i, countOfCirclesInRow, height);
+			im.transform.localPosition = GetPostitonForPeg(i, countOfCirclesInRow, height);
 		}
 
 

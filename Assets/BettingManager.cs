@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using TMPro;
@@ -63,7 +61,8 @@ public class BettingManager : MonoBehaviour
 
 	private void DecreaseBet()
 	{
-		if (_currentBet <= 1) {
+		if (_currentBet <= 1)
+		{
 			return;
 		}
 		_currentBet--;
@@ -72,41 +71,36 @@ public class BettingManager : MonoBehaviour
 
 	public async void LaunchGreenBall()
 	{
-		var coefficientSource = _greenCoefficients;
+		LaunchBallAsync(Color.green, _greenCoefficients);
+
+	}
+	public async void LaunchRedBall()
+	{
+		LaunchBallAsync(Color.red, _redCoefficients);
+	}
+	public async void LaunchYellowBall()
+	{
+		LaunchBallAsync(Color.yellow, _yellowCoefficients);
+	}
+
+
+	private async void LaunchBallAsync(Color color, double[] coefs)
+	{
 		double currentBet = _currentBet;
 		if (_paymentManager.TakeFromBalance(currentBet))
 		{
-			print("asdfg");
-			print(_piramidManager);
 			var ball = Instantiate(ballPrefab);
-			var t = await _piramidManager.LaunchBallAsync(ball);
-			double coefficient = coefficientSource[int.Parse(t.name)];
+			ball.sprite.material.color = color;
+
+			_piramidManager.SetPositionANdParentForBall(ball);
+			var t = await ball.WaitForTrigger();
+			double coefficient = coefs[int.Parse(t.name)];
 			_paymentManager.ClaimReward(coefficient * currentBet);
-			print(coefficient);
-			print(currentBet);
 		}
 
 	}
 
 
-	private async Task<GameObject> WaitForBallTrigger(Transform ball)
-	{
-		// Create a simple trigger detector
-		// Wait for the ball to hit the trigger and return the GameObject
-		return await ball.GetComponent<Ball>().WaitForTrigger();
-	}
-	public async void LaunchRedBall()
-	{
-		var ball = Instantiate(ballPrefab);
-		var t = await _piramidManager.LaunchBallAsync(ball);
-
-	}
-	public async void LaunchYellowBall()
-	{
-		var ball = Instantiate(ballPrefab);
-		var t = await _piramidManager.LaunchBallAsync(ball);
-
-	}
 
 	public void DisableUI()
 	{
