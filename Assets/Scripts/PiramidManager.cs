@@ -15,6 +15,7 @@ public class PiramidManager : MonoBehaviour
 	public Image coefficientPrefab;
 	public Canvas _canvas;
 
+	const int FINISHLAYER = 8;
 
 	public void SetPositionANdParentForBall(Ball ball)
 	{
@@ -50,6 +51,7 @@ public class PiramidManager : MonoBehaviour
 
 			g.transform.position = GetPostitonForPeg(i, count, height);
 			g.name = i.ToString();
+			g.layer = FINISHLAYER;
 			var coll = g.AddComponent<BoxCollider2D>();
 			coll.isTrigger = true;
 			coll.size = new Vector2(0.01f, 0.01f);
