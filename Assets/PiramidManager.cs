@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class PiramidManager : MonoBehaviour
 {
-	// Start is called before the first frame update
 	public float heightBetweeenRows;
 	public float widthBetweeencircles;
 	public int rowCount;
@@ -15,20 +14,6 @@ public class PiramidManager : MonoBehaviour
 	public Transform ballPrefab;
 	public Image coefficientPrefab;
 	public Canvas _canvas;
-
-	//public async Task<GameObject> LaunchBallAsync(Ball ball)
-	//{
-	//	var ballT = ball.transform;
-	//	ballT.parent = transform;
-	//	var xOfBall = Random.Range(-0.5f * widthBetweeencircles, 0.5f * widthBetweeencircles);
-	//	ballT.localPosition = new Vector3(xOfBall, 2 * heightBetweeenRows, 0);
-	//	return await WaitForBallTrigger(ballT);
-	//}
-
-	//private async Task<GameObject> WaitForBallTrigger(Transform ball)
-	//{
-	//	return await ball.GetComponent<Ball>().WaitForTrigger();
-	//}
 
 
 	public void SetPositionANdParentForBall(Ball ball)

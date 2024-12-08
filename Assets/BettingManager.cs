@@ -30,14 +30,12 @@ public class BettingManager : MonoBehaviour
 	[Inject]
 	private void Init(PiramidManager piramidManager, PaymentManager paymentManager)
 	{
-		print(piramidManager);
 		_paymentManager = paymentManager;
 		_piramidManager = piramidManager;
 	}
 
 	private void Start()
 	{
-		print(currentBetText.text);
 		_currentBet = double.Parse(currentBetText.text, CultureInfo.InvariantCulture);
 		_piramidManager.CreatePiramid();
 		_piramidManager.SetCoefficients(_greenCoefficients, _yellowCoefficients, _redCoefficients);
@@ -69,16 +67,16 @@ public class BettingManager : MonoBehaviour
 		currentBetText.text = _currentBet.ToString();
 	}
 
-	public async void LaunchGreenBall()
+	public void LaunchGreenBall()
 	{
 		LaunchBallAsync(Color.green, _greenCoefficients);
 
 	}
-	public async void LaunchRedBall()
+	public void LaunchRedBall()
 	{
 		LaunchBallAsync(Color.red, _redCoefficients);
 	}
-	public async void LaunchYellowBall()
+	public void LaunchYellowBall()
 	{
 		LaunchBallAsync(Color.yellow, _yellowCoefficients);
 	}
@@ -99,33 +97,5 @@ public class BettingManager : MonoBehaviour
 		}
 
 	}
-
-
-
-	public void DisableUI()
-	{
-		_launchGreenBallButton.enabled = false;
-		_launchRedBallButton.enabled = false;
-		_launchYellowBallButton.enabled = false;
-
-		_increaseBetButton.enabled = false;
-		_decreaseBetButton.enabled = false;
-	}
-
-
-	public void EnableUI()
-	{
-		_launchGreenBallButton.enabled = true;
-		_launchRedBallButton.enabled = true;
-		_launchYellowBallButton.enabled = true;
-
-		_increaseBetButton.enabled = true;
-		_decreaseBetButton.enabled = true;
-
-	}
-
-
-
-
 
 }

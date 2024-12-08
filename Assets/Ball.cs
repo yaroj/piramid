@@ -9,7 +9,6 @@ public class Ball : MonoBehaviour
 	public SpriteRenderer sprite;
 	private void OnTriggerEnter2D(Collider2D trigger)
 	{
-		print("triggered");
 		triggerTaskCompletionSource?.SetResult(trigger.gameObject);
 	}
 
