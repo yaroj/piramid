@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D trigger)
 	{
 		triggerTaskCompletionSource?.SetResult(trigger.gameObject);
+		Destroy(gameObject, 1);
 	}
 
 	public Task<GameObject> WaitForTrigger()

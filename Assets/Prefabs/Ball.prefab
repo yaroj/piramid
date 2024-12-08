@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8983779754324530591}
   - component: {fileID: 8743663113073102697}
   - component: {fileID: -5894285346247182911}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 119
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
