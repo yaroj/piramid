@@ -2587,21 +2587,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _redCoefficients:
+  - 4
   - 0
+  - 2
+  - 1
+  - 4
+  - 5
+  - 2
+  - 4
+  - 41
   - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 2
+  - 1
+  - 1
+  - 1
+  - 1
   _yellowCoefficients:
   - 55
   - 12

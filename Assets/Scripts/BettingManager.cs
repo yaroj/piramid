@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using TMPro;
@@ -26,6 +28,8 @@ public class BettingManager : MonoBehaviour
 
 	private PiramidManager _piramidManager;
 	private PaymentManager _paymentManager;
+
+	public Queue<Ball> ballsPool = new();
 
 	[Inject]
 	private void Init(PiramidManager piramidManager, PaymentManager paymentManager)
@@ -87,15 +91,39 @@ public class BettingManager : MonoBehaviour
 		double currentBet = _currentBet;
 		if (_paymentManager.TakeFromBalance(currentBet))
 		{
-			var ball = Instantiate(ballPrefab);
-			ball.sprite.material.color = color;
 
-			_piramidManager.SetPositionANdParentForBall(ball);
+			//var ball = Instantiate(ballPrefab);
+			var ball = GetBall();
+			ball._sprite.material.color = color;
+
+			_piramidManager.SetPositionAndParentForBall(ball);
 			var t = await ball.WaitForTrigger();
+			StartCoroutine( ReleaseBall(ball));
 			double coefficient = coefs[int.Parse(t.name)];
 			_paymentManager.ClaimReward(coefficient * currentBet);
 		}
 
+	}
+
+	private Ball GetBall()
+	{	if(ballsPool.Count == 0)
+		{
+			return Instantiate(ballPrefab);
+		}
+
+		var ball = ballsPool.Dequeue();
+		ball.gameObject.SetActive(true);
+		ball.transform.localPosition = Vector3.zero;
+
+		return ball;
+	}
+
+	private IEnumerator ReleaseBall(Ball ball)
+	{
+		yield return new WaitForSeconds(1f);
+		ball.gameObject.SetActive(false);
+		ball._body.velocity = Vector3.zero;
+		ballsPool.Enqueue(ball);
 	}
 
 }

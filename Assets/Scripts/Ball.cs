@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-	private TaskCompletionSource<GameObject> triggerTaskCompletionSource;
-	public SpriteRenderer sprite;
+	private TaskCompletionSource<GameObject> _triggerTaskCompletionSource;
+	public SpriteRenderer _sprite;
+	public Rigidbody2D _body;
 	private void OnTriggerEnter2D(Collider2D trigger)
 	{
-		triggerTaskCompletionSource?.SetResult(trigger.gameObject);
-		Destroy(gameObject, 1);
+		_triggerTaskCompletionSource?.SetResult(trigger.gameObject);
 	}
 
 	public Task<GameObject> WaitForTrigger()
 	{
-		triggerTaskCompletionSource = new TaskCompletionSource<GameObject>();
-		return triggerTaskCompletionSource.Task;
+		_triggerTaskCompletionSource = new TaskCompletionSource<GameObject>();
+		return _triggerTaskCompletionSource.Task;
 	}
 }

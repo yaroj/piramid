@@ -17,7 +17,7 @@ public class PiramidManager : MonoBehaviour
 
 	const int FINISHLAYER = 8;
 
-	public void SetPositionANdParentForBall(Ball ball)
+	public void SetPositionAndParentForBall(Ball ball)
 	{
 		var ballT = ball.transform;
 		ballT.parent = transform;
